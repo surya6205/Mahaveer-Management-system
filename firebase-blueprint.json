@@ -1,0 +1,26 @@
+{
+  "entities": {
+    "tms_data": {
+      "title": "TMS Global Data Store",
+      "description": "Stores synced LR entries, customers, drivers, vehicles, rates, payments, and saved monthly invoices",
+      "type": "object",
+      "properties": {
+        "lrEntries": { "type": "array" },
+        "customers": { "type": "array" },
+        "drivers": { "type": "array" },
+        "vehicles": { "type": "array" },
+        "locationRates": { "type": "array" },
+        "payments": { "type": "array" },
+        "monthlyInvoices": { "type": "array" },
+        "companyProfile": { "type": "object" },
+        "updatedAt": { "type": "string" }
+      }
+    }
+  },
+  "firestore": {
+    "/tms_data/{docId}": {
+      "schema": "tms_data",
+      "description": "Single-tenant document for live multi-device transport data sync"
+    }
+  }
+}

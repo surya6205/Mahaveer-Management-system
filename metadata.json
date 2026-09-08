@@ -1,0 +1,6 @@
+{
+  "name": "Transport Management System",
+  "description": "Comprehensive Transport & Logistics Management System with LR Bilty Generation, Customer Master, Driver Records, Vehicle Tracking, Freight Ledger, Reports & Backup",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

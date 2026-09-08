@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 4mm 5mm;
+  }
+
+  /* Hide main application shell completely during modal printing */
+  .no-print-app-shell,
+  header,
+  sidebar,
+  nav,
+  aside,
+  main,
+  footer,
+  .print\:hidden {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* Reset document flow for clean PDF rendering */
+  html, body, #root, #root > div {
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+
+  /* Modal backdrop becomes transparent wrapper */
+  .bilty-modal-wrapper,
+  .monthly-tax-invoice-modal-wrapper {
+    position: static !important;
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    background: #ffffff !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+  }
+
+  .bilty-modal-wrapper > div,
+  .monthly-tax-invoice-modal-wrapper > div {
+    background: #ffffff !important;
+    border: none !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Monthly Tax Invoice 1-Page A4 Print Rules */
+  #invoice-single-page-area {
+    display: block !important;
+    visibility: visible !important;
+    width: 100% !important;
+    max-width: 190mm !important;
+    margin: 0 auto !important;
+    padding: 2.5mm 3mm !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    border: 1.5px solid #000000 !important;
+    box-sizing: border-box !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  #invoice-single-page-area * {
+    visibility: visible !important;
+    color: #000000 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 3-Page Bilty Page Break Rules */
+  .bilty-single-copy-page {
+    page-break-after: always !important;
+    break-after: page !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    max-height: 282mm !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    padding: 1.5mm !important;
+    margin: 0 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .bilty-single-copy-page:last-child {
+    page-break-after: auto !important;
+    break-after: auto !important;
+  }
+}
+
