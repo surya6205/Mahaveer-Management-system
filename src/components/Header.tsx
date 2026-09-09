@@ -16,9 +16,11 @@ import {
   ChevronRight,
   PackageCheck,
   CheckCircle2,
-  Clock
+  Clock,
+  Menu
 } from 'lucide-react';
 import { CompanySettings, AuthSession, LREntry } from '../types';
+import { PWAInstallButton } from './PWAInstallButton';
 
 interface HeaderProps {
   companySettings?: CompanySettings;
@@ -39,6 +41,8 @@ interface HeaderProps {
   onOpenAdminSettings?: () => void;
   onOpenProfile?: () => void;
   onLogout?: () => void;
+  isMobileMenuOpen?: boolean;
+  onToggleMobileMenu?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -59,7 +63,9 @@ export const Header: React.FC<HeaderProps> = ({
   currentSession,
   onOpenAdminSettings,
   onOpenProfile,
-  onLogout
+  onLogout,
+  isMobileMenuOpen = false,
+  onToggleMobileMenu
 }) => {
   const [isSearchDropdownOpen, setIsSearchDropdownOpen] = useState(false);
   const searchContainerRef = useRef<HTMLDivElement>(null);
@@ -120,7 +126,23 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
           
           {/* Company Brand & Logo */}
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-2.5 sm:space-x-3">
+            {/* Mobile Hamburger Drawer Toggle */}
+            {onToggleMobileMenu && (
+              <button
+                type="button"
+                onClick={onToggleMobileMenu}
+                aria-label="Toggle navigation menu"
+                className="md:hidden p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors shrink-0 cursor-pointer"
+              >
+                {isMobileMenuOpen ? (
+                  <X className="h-5 w-5 text-amber-400" />
+                ) : (
+                  <Menu className="h-5 w-5" />
+                )}
+              </button>
+            )}
+
             {company.logoUrl ? (
               <div 
                 onClick={handleProfileClick}
@@ -307,6 +329,9 @@ export const Header: React.FC<HeaderProps> = ({
                 </div>
               )}
             </div>
+
+            {/* PWA Install Button (Android / iOS / Desktop) */}
+            <PWAInstallButton />
 
             {/* Live Cloud Multi-Device Sync Button */}
             <button

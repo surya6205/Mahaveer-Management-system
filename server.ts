@@ -474,7 +474,14 @@ IMPORTANT INSTRUCTIONS:
   });
 
   // Vite development middleware or static production serving
+  const BASE_PATH = '/Mahaveer-Management-system';
+
   if (process.env.NODE_ENV !== 'production') {
+    // Redirect root to base path in dev if accessing top-level
+    app.get('/', (_req, res) => {
+      res.redirect(`${BASE_PATH}/`);
+    });
+
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa',
@@ -482,8 +489,9 @@ IMPORTANT INSTRUCTIONS:
     app.use(vite.middlewares);
   } else {
     const distPath = path.join(process.cwd(), 'dist');
+    app.use(BASE_PATH, express.static(distPath));
     app.use(express.static(distPath));
-    app.get('*', (_req, res) => {
+    app.get(['/Mahaveer-Management-system/*', '*'], (_req, res) => {
       res.sendFile(path.join(distPath, 'index.html'));
     });
   }

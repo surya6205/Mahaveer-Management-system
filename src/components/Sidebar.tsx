@@ -13,10 +13,12 @@ import {
   MapPin,
   Shield,
   LogOut,
-  Building2
+  Building2,
+  X
 } from 'lucide-react';
 import { AuthSession } from '../types';
 import { PermissionsService } from '../utils/permissions';
+import { PWAInstallButton } from './PWAInstallButton';
 
 export type TabType =
   | 'dashboard'
@@ -40,6 +42,8 @@ interface SidebarProps {
   currentSession?: AuthSession | null;
   onOpenAdminSettings?: () => void;
   onLogout?: () => void;
+  isMobileMenuOpen?: boolean;
+  onCloseMobileMenu?: () => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -50,7 +54,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
   expiringCount,
   currentSession,
   onOpenAdminSettings,
-  onLogout
+  onLogout,
+  isMobileMenuOpen = false,
+  onCloseMobileMenu
 }) => {
   const isTransport = currentSession?.companyId === 'mahaveer_transport';
   const userRole = currentSession?.role || 'admin';
@@ -129,8 +135,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
   // Role-Based Filtering
   const menuItems = rawMenuItems.filter((item) => PermissionsService.isTabAllowed(item.id, userRole));
 
-  return (
-    <aside className="w-full md:w-64 bg-slate-900 border-r border-slate-800 flex-shrink-0 flex flex-col justify-between">
+  const renderNavContent = (isMobile = false) => (
+    <>
       <div className="p-4 space-y-1">
         {/* Active Company Status Box */}
         <div className={`p-3 mb-3 rounded-xl border text-xs flex items-center justify-between ${
@@ -146,6 +152,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
           </div>
         </div>
 
+        {/* PWA Install Button inside Mobile Drawer */}
+        {isMobile && (
+          <div className="mb-3">
+            <PWAInstallButton className="w-full justify-center py-2" />
+          </div>
+        )}
+
         <div className="text-xs font-semibold uppercase tracking-wider text-slate-400 px-3 py-1">
           TMS Core Modules
         </div>
@@ -156,7 +169,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
             return (
               <button
                 key={item.id}
-                onClick={() => setActiveTab(item.id as TabType)}
+                onClick={() => {
+                  setActiveTab(item.id as TabType);
+                  if (isMobile && onCloseMobileMenu) {
+                    onCloseMobileMenu();
+                  }
+                }}
                 className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all cursor-pointer ${
                   isActive
                     ? isTransport
@@ -190,7 +208,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {/* Admin Settings Button */}
         {onOpenAdminSettings && (
           <button
-            onClick={onOpenAdminSettings}
+            onClick={() => {
+              onOpenAdminSettings();
+              if (isMobile && onCloseMobileMenu) onCloseMobileMenu();
+            }}
             className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700 text-xs font-semibold text-amber-300 hover:text-amber-200 transition-all cursor-pointer"
           >
             <div className="flex items-center gap-2.5">
@@ -206,7 +227,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {/* Logout Button */}
         {onLogout && (
           <button
-            onClick={onLogout}
+            onClick={() => {
+              onLogout();
+              if (isMobile && onCloseMobileMenu) onCloseMobileMenu();
+            }}
             className="w-full flex items-center gap-2.5 px-3.5 py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-xs font-semibold text-rose-300 hover:text-rose-200 transition-all cursor-pointer"
           >
             <LogOut className="h-4 w-4" />
@@ -224,7 +248,51 @@ export const Sidebar: React.FC<SidebarProps> = ({
           </p>
         </div>
       </div>
-    </aside>
+    </>
+  );
+
+  return (
+    <>
+      {/* Desktop Persistent Sidebar */}
+      <aside className="hidden md:flex md:w-64 bg-slate-900 border-r border-slate-800 flex-shrink-0 flex-col justify-between">
+        {renderNavContent(false)}
+      </aside>
+
+      {/* Mobile Off-Canvas Drawer Navigation */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-40 md:hidden animate-in fade-in duration-200">
+          <div
+            className="fixed inset-0 bg-black/75 backdrop-blur-xs"
+            onClick={onCloseMobileMenu}
+            aria-hidden="true"
+          />
+          <aside className="fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] bg-slate-900 border-r border-slate-800 flex flex-col justify-between shadow-2xl overflow-y-auto animate-in slide-in-from-left duration-200">
+            <div className="p-4 border-b border-slate-800 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="h-8 w-8 rounded-lg bg-gradient-to-tr from-indigo-600 to-sky-600 flex items-center justify-center text-white font-bold text-sm">
+                  M
+                </div>
+                <div>
+                  <h2 className="text-xs font-black uppercase text-white tracking-wider">
+                    {currentSession?.companyName || (isTransport ? 'MAHAVEER TRANSPORT' : 'MAHAVEER LOGISTICS')}
+                  </h2>
+                  <p className="text-[10px] text-slate-400">Navigation Menu</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={onCloseMobileMenu}
+                className="p-1.5 rounded-lg bg-slate-800 text-slate-400 hover:text-white border border-slate-700 cursor-pointer"
+                aria-label="Close menu"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+            {renderNavContent(true)}
+          </aside>
+        </div>
+      )}
+    </>
   );
 };
 

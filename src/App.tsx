@@ -21,6 +21,8 @@ import { AdminSettingsModal } from './components/AdminSettingsModal';
 import { ProfileModal } from './components/ProfileModal';
 import { ProfitLossView } from './components/ProfitLossView';
 import { DriverTrackingView } from './components/DriverTrackingView';
+import { PWAUpdateToast } from './components/PWAUpdateToast';
+import { OfflineIndicator } from './components/OfflineIndicator';
 
 import { StorageService } from './utils/storage';
 import { FirebaseSyncService, CloudTMSState } from './utils/firebaseSync';
@@ -56,6 +58,7 @@ export default function App() {
   // Core Transport State
   const [activeTab, setActiveTab] = useState<TabType>('dashboard');
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
   const [companySettings, setCompanySettings] = useState<CompanySettings>(() =>
     StorageService.getCompanySettings(activeCompanyId)
@@ -664,6 +667,8 @@ export default function App() {
         onOpenAdminSettings={() => setIsAdminSettingsOpen(true)}
         onOpenProfile={() => setIsProfileModalOpen(true)}
         onLogout={handleLogout}
+        isMobileMenuOpen={isMobileMenuOpen}
+        onToggleMobileMenu={() => setIsMobileMenuOpen((prev) => !prev)}
       />
 
       {/* Main Body with Sidebar + Active View */}
@@ -677,6 +682,8 @@ export default function App() {
           currentSession={currentSession}
           onOpenAdminSettings={() => setIsProfileModalOpen(true)}
           onLogout={handleLogout}
+          isMobileMenuOpen={isMobileMenuOpen}
+          onCloseMobileMenu={() => setIsMobileMenuOpen(false)}
         />
 
         <main className="flex-1 p-3 sm:p-4 md:p-6 overflow-y-auto max-h-[calc(100vh-70px)]">
@@ -1039,6 +1046,10 @@ export default function App() {
         }}
         onLogout={handleLogout}
       />
+
+      {/* PWA Floating Utilities: Update Notification Toast & Offline Status */}
+      <PWAUpdateToast />
+      <OfflineIndicator />
 
       {/* Global Print Footer Styles */}
       <style>{`

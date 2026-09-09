@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="50%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#090d16" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f97316" />
+      <stop offset="100%" stop-color="#ea580c" />
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#2563eb" />
+    </linearGradient>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1b4b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#f97316" flood-opacity="0.35" />
+    </filter>
+  </defs>
+
+  <!-- Base App Background (Squircle) -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)" />
+  <rect x="6" y="6" width="500" height="500" rx="106" fill="none" stroke="#334155" stroke-width="3" opacity="0.6" />
+
+  <!-- Outer Glow Ring -->
+  <circle cx="256" cy="235" r="170" fill="none" stroke="url(#blueGrad)" stroke-width="2.5" opacity="0.4" stroke-dasharray="6 8" />
+
+  <!-- Inner Brand Shield / Emblem -->
+  <path d="M 256 95 L 375 140 C 375 250 256 345 256 345 C 256 345 137 250 137 140 Z" 
+        fill="url(#shieldGrad)" 
+        stroke="url(#accentGrad)" 
+        stroke-width="5" 
+        filter="url(#glow)" />
+
+  <!-- Bold 'M' Monogram in Shield -->
+  <path d="M 185 270 L 185 160 L 225 228 L 256 182 L 287 228 L 327 160 L 327 270 L 302 270 L 302 205 L 270 252 L 242 252 L 210 205 L 210 270 Z" 
+        fill="#ffffff" />
+
+  <!-- Aerodynamic Transport Truck Symbol Overlay -->
+  <g transform="translate(146, 290) scale(0.43)">
+    <!-- Road Line -->
+    <rect x="-30" y="150" width="580" height="8" rx="4" fill="#38bdf8" opacity="0.8" />
+    <line x1="20" y1="170" x2="120" y2="170" stroke="#f97316" stroke-width="6" stroke-linecap="round" />
+    <line x1="160" y1="170" x2="300" y2="170" stroke="#f97316" stroke-width="6" stroke-linecap="round" />
+    <line x1="340" y1="170" x2="480" y2="170" stroke="#f97316" stroke-width="6" stroke-linecap="round" />
+
+    <!-- Truck Trailer (Cargo Container) -->
+    <rect x="0" y="20" width="290" height="115" rx="12" fill="url(#blueGrad)" stroke="#60a5fa" stroke-width="3" />
+    <!-- Container Corrugation Ridges -->
+    <line x1="50" y1="25" x2="50" y2="130" stroke="#1d4ed8" stroke-width="4" />
+    <line x1="100" y1="25" x2="100" y2="130" stroke="#1d4ed8" stroke-width="4" />
+    <line x1="150" y1="25" x2="150" y2="130" stroke="#1d4ed8" stroke-width="4" />
+    <line x1="200" y1="25" x2="200" y2="130" stroke="#1d4ed8" stroke-width="4" />
+    <line x1="250" y1="25" x2="250" y2="130" stroke="#1d4ed8" stroke-width="4" />
+
+    <!-- Truck Cab -->
+    <path d="M 292 60 L 360 60 L 400 95 L 400 135 L 292 135 Z" fill="url(#accentGrad)" stroke="#ea580c" stroke-width="3" />
+    <!-- Cab Windshield -->
+    <path d="M 320 68 L 355 68 L 388 95 L 320 95 Z" fill="#e0f2fe" opacity="0.95" />
+    <!-- Headlight -->
+    <polygon points="398,115 415,112 415,125 398,122" fill="#fef08a" />
+
+    <!-- Wheels with Rims -->
+    <!-- Rear Wheels -->
+    <circle cx="55" cy="140" r="26" fill="#090d16" stroke="#475569" stroke-width="4" />
+    <circle cx="55" cy="140" r="10" fill="#94a3b8" />
+    <circle cx="120" cy="140" r="26" fill="#090d16" stroke="#475569" stroke-width="4" />
+    <circle cx="120" cy="140" r="10" fill="#94a3b8" />
+    <!-- Cab Front Wheel -->
+    <circle cx="355" cy="140" r="26" fill="#090d16" stroke="#475569" stroke-width="4" />
+    <circle cx="355" cy="140" r="10" fill="#94a3b8" />
+  </g>
+
+  <!-- Bottom Brand Text -->
+  <text x="256" y="440" 
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" 
+        font-size="28" 
+        font-weight="900" 
+        letter-spacing="5" 
+        fill="#f8fafc" 
+        text-anchor="middle">MAHAVEER</text>
+  <text x="256" y="468" 
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" 
+        font-size="14" 
+        font-weight="600" 
+        letter-spacing="3" 
+        fill="#f97316" 
+        text-anchor="middle">MANAGEMENT SYSTEM</text>
+</svg>
